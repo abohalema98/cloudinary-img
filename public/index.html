@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Image Upload and Preview</title>
+    <link
+      rel="shortcut icon"
+      href="http://res.cloudinary.com/dczryn1n3/image/upload/v1692057025/1692057025892travel-tourism_5333722.png"
+      type="image/x-icon"
+    />
+    <link rel="stylesheet" href="css/sytle.css" type="text/css" />
+  </head>
+  <body>
+    <h1>Image Upload and Preview</h1>
+    <form
+      id="upload-form"
+      action="/upload"
+      method="POST"
+      enctype="multipart/form-data"
+    >
+      <input type="file" name="image" />
+      <button type="submit">Upload</button>
+    </form>
+    <!-- <div id="link Preview">
+    <a href=""> link Preview</a>
+  </div> -->
+    <div id="image-preview">
+      <img id="image" />
+    </div>
+
+    <script>
+      const form = document.getElementById("upload-form");
+      const imagePreview = document.getElementById("image-preview");
+      const image = document.getElementById("image");
+
+      form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        const formData = new FormData(form);
+
+        try {
+          const response = await fetch("/upload", {
+            method: "POST",
+            body: formData,
+          });
+
+          const data = await response.json();
+          const imageUrl = data.url;
+
+          // Display the image preview
+          const img = image;
+          img.src = imageUrl;
+          imagePreview.innerHTML = "";
+          imagePreview.appendChild(img);
+        } catch (error) {
+          console.error("Error uploading image:", error);
+        }
+      });
+    </script>
+  </body>
+</html>
