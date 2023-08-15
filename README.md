@@ -59,5 +59,5 @@ npm start
 
 ## PIC
 
-![image](https://github.com/abohalema98/cloudinary-img/assets/57066603/a7b0e38a-ec01-4d40-90dd-e3b31b4ad809)
+![Screenshot 2023-08-15 025336](https://github.com/abohalema98/cloudinary-img/assets/57066603/1ce71e2c-704e-48c6-a701-86f4b66067be)
 
