@@ -1,4 +1,3 @@
-// Description: This is the main file of the project
 const exprress = require('express');
 const app = exprress();
 const bodyParser = require('body-parser');
@@ -15,8 +14,6 @@ cloudinary.config({
     api_secret: process.env.CLOUDINARY_API_SECRET,
     secure: true
 });
-
-
 
 // Multer File upload settings
 const DIR = './public';
