@@ -1,7 +1,3 @@
-# cloudinary-img
-
-Sure, here's a sample README file you can use for your Node.js application:
-
 # Cloudinary Image Upload App
 
 This is a Node.js application that allows users to upload images to Cloudinary using the Express framework and Multer for file upload.
