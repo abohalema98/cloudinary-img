@@ -6,7 +6,7 @@
     <title>Image Upload and Preview</title>
     <link
       rel="shortcut icon"
-      href="http://res.cloudinary.com/dczryn1n3/image/upload/v1692057025/1692057025892travel-tourism_5333722.png"
+      href="./1692144455473travel-tourism_5333722.png"
       type="image/x-icon"
     />
     <link rel="stylesheet" href="css/sytle.css" type="text/css" />
@@ -45,9 +45,9 @@
           });
 
           const data = await response.json();
+
           const imageUrl = data.url;
 
-          // Display the image preview
           const img = image;
           img.src = imageUrl;
           imagePreview.innerHTML = "";
