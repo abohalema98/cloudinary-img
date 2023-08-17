@@ -1,3 +1,4 @@
+// Description: This is the main file of the project
 const exprress = require('express');
 const app = exprress();
 const bodyParser = require('body-parser');
@@ -5,6 +6,10 @@ const path = require('path');
 require('dotenv').config({ path: path.join(__dirname, '.env') });
 const multer = require('multer');
 const cloudinary = require('cloudinary').v2;
+const cors = require('cors');
+
+// Configure cors
+app.use(cors({}));
 
 
 // Configure cloudinary
@@ -14,6 +19,8 @@ cloudinary.config({
     api_secret: process.env.CLOUDINARY_API_SECRET,
     secure: true
 });
+
+
 
 // Multer File upload settings
 const DIR = './public';
