@@ -38,6 +38,11 @@
         event.preventDefault();
         const formData = new FormData(form);
 
+        const response = await fetch("/upload", {
+          method: "POST",
+          body: formData,
+        });
+
         try {
           const response = await fetch("/upload", {
             method: "POST",
@@ -45,17 +50,16 @@
           });
 
           const data = await response.json();
-          // return data.url;
-          console.log(data.url);
 
-          // const imageUrl = data.url;
+          const imageUrl = data.url;
+          const img = image;
+          img.src = imageUrl;
+          imagePreview.innerHTML = "";
+          imagePreview.appendChild(img);
 
-          // const img = image;
-          // img.src = imageUrl;
-          // imagePreview.innerHTML = "";
-          // imagePreview.appendChild(img);
         } catch (error) {
           console.error("Error uploading image:", error);
+          
         }
       });
     </script>
