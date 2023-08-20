@@ -4,11 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Image Upload and Preview</title>
-    <link
-      rel="shortcut icon"
-      href="./1692144455473travel-tourism_5333722.png"
-      type="image/x-icon"
-    />
     <link rel="stylesheet" href="css/sytle.css" type="text/css" />
   </head>
   <body>
@@ -44,11 +39,13 @@
       
           const data = await response.json();
 
-          const imageUrl = data.url;
-          const img = image;
-          img.src = imageUrl;
-          imagePreview.innerHTML = "";
-          imagePreview.appendChild(img);
+          console.log(data.url);
+
+          // const imageUrl = data.url;
+          // const img = image;
+          // img.src = imageUrl;
+          // imagePreview.innerHTML = "";
+          // imagePreview.appendChild(img);
 
         } catch (error) {
           console.error("Error uploading image:", error);
