@@ -3,6 +3,12 @@ const multer = require('multer');
 const cloudinary = require('cloudinary').v2;
 require('dotenv').config();
 const app = express();
+const cors = require('cors');
+
+
+// Cors configuration
+app.use(cors());
+
 
 // Cloudinary configuration
 cloudinary.config({
@@ -20,7 +26,7 @@ app.use(express.static('public'));
 
 // Route for uploading images
 app.post('/upload', upload.single('image'), async (req, res) => {
-
+    
     try {
         if (!req.file) {
             return res.status(400).json({ message: 'No file uploaded' });
