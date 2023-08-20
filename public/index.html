@@ -22,9 +22,6 @@
       <input type="file" name="image" />
       <button type="submit">Upload</button>
     </form>
-    <!-- <div id="link Preview">
-    <a href=""> link Preview</a>
-  </div> -->
     <div id="image-preview">
       <img id="image" />
     </div>
@@ -38,7 +35,7 @@
         event.preventDefault();
         const formData = new FormData(form);
 
-        const response = await fetch("https://api.cloudinary.com/v1_1/dczryn1n3/image/upload", {
+        const response = await fetch("/upload", {
           method: "POST",
           body: formData,
         });
