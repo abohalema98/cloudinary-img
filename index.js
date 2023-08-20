@@ -1,76 +1,49 @@
-// Description: This is the main file of the project
-const exprress = require('express');
-const app = exprress();
-const bodyParser = require('body-parser');
-const path = require('path');
-require('dotenv').config({ path: path.join(__dirname, '.env') });
+const express = require('express');
 const multer = require('multer');
 const cloudinary = require('cloudinary').v2;
-const cors = require('cors');
+require('dotenv').config();
+const app = express();
 
-// Configure cors
-app.use(cors({}));
-
-
-// Configure cloudinary
+// Cloudinary configuration
 cloudinary.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
     api_key: process.env.CLOUDINARY_API_KEY,
-    api_secret: process.env.CLOUDINARY_API_SECRET,
-    secure: true
+    api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
+// Multer configuration for file uploads
+const storage = multer.memoryStorage(); // Store uploaded files in memory
+const upload = multer({ storage });
 
+// Serve static files from the "public" folder (optional)
+app.use(express.static('public'));
 
-// Multer File upload settings
-const DIR = './public';
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, DIR);
-    },
-    filename: function (req, file, cb) {
-        const filename = Date.now() + file.originalname.toLowerCase().split(' ').join('-');
-        cb(null, filename);
-    }
-});
-const upload = multer({ storage: storage });
-
-
-// Configure body-parser
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-app.use(exprress.static(path.join(__dirname, 'public')));
-
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
-});
-
-// Upload image to cloudinary
+// Route for uploading images
 app.post('/upload', upload.single('image'), async (req, res) => {
-
-    // Configure cloudinary options
-    const options = {
-        use_filename: true,
-        unique_filename: false,
-        overwrite: true,
-    };
 
     try {
         if (!req.file) {
-            res.status(400).send('No image file provided.');
-            return;
+            return res.status(400).json({ message: 'No file uploaded' });
         }
 
-        const result = await cloudinary.uploader.upload(req.file.path, options);
-        res.json({ url: result.url });
+        // Upload the image to Cloudinary using a Buffer
+        const result = await cloudinary.uploader.upload_stream((error, result) => {
+            if (error) {
+                console.error('Error uploading file:', error);
+                return res.status(500).json({ message: 'An error occurred' });
+            }
+
+            // Response with Cloudinary image URL
+            res.json({ url: result.url });
+        }).end(req.file.buffer);
 
     } catch (error) {
-        console.error(error);
-        res.status(500).send('Internal server error.');
+        console.error('Error uploading file:', error);
+        res.status(500).json({ message: 'An error occurred' });
     }
 });
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-    console.log('Server is running on port 3000');
-}); 
+    console.log(`Server is running on port ${PORT}`);
+});
