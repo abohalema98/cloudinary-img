@@ -7,7 +7,11 @@ const cors = require('cors');
 
 
 // Cors configuration
-app.use(cors());
+app.use(cors({
+    origin: 'https://image-ser.onrender.com', // Replace with the actual origin of your frontend app
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
+}));
 
 
 // Cloudinary configuration
@@ -26,7 +30,7 @@ app.use(express.static('public'));
 
 // Route for uploading images
 app.post('/upload', upload.single('image'), async (req, res) => {
-    
+
     try {
         if (!req.file) {
             return res.status(400).json({ message: 'No file uploaded' });
